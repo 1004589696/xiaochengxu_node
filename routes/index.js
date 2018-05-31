@@ -1,9 +1,8 @@
-var express = require('express');
-var router = express.Router();
+/**
+ * 实现分发路由模块
+ */
+module.exports = function (app) {
+    var interlocution = require('./interlocution');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+    app.use('/api/interlocution', interlocution);
+};

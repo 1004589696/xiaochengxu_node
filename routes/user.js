@@ -77,18 +77,4 @@ router.post('/login', function (req, res, next) {
     });
 });
 
-
-/**
- * 实现问题删除  /api/interlocution/deleteone/${interlocutionId}
- */
-// router.delete('/deleteone/:interlocutionId', function (req, res, next) {
-//     var interlocutionId = req.params.interlocutionId;
-//     CONNECT.deleteOne(Interlocution, res, {_id: interlocutionId}, function (result) {
-//         res.json({
-//             code: '0',
-//             result: result
-//         });
-//     });
-// });
-
 module.exports = router;

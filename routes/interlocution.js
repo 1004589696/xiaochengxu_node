@@ -22,7 +22,7 @@ router.post('/add', passport.authenticate('bearer', {session: false}), function 
 /**
  * 实现问题编辑 /api/interlocution/edit?interlocutionId=${interlocutionId}
  */
-router.post('/edit', function (req, res, next) {
+router.post('/edit', passport.authenticate('bearer', {session: false}), function (req, res, next) {
     var interlocutionId = req.query.interlocutionId;
     var reqData = req.body;
     CONNECT.updateOne(Interlocution, res, {_id: interlocutionId}, reqData, function (result) {
@@ -37,7 +37,7 @@ router.post('/edit', function (req, res, next) {
 /**
  * 实现问题删除  /api/interlocution/deleteone/${interlocutionId}
  */
-router.delete('/deleteone/:interlocutionId', function (req, res, next) {
+router.delete('/deleteone/:interlocutionId', passport.authenticate('bearer', {session: false}), function (req, res, next) {
     var interlocutionId = req.params.interlocutionId;
     CONNECT.deleteOne(Interlocution, res, {_id: interlocutionId}, function (result) {
         res.json({
@@ -51,7 +51,7 @@ router.delete('/deleteone/:interlocutionId', function (req, res, next) {
 /**
  * 实现问题查找  /api/interlocution/findone/${interlocutionId}
  */
-router.get('/findone/:interlocutionId', function (req, res, next) {
+router.get('/findone/:interlocutionId', passport.authenticate('bearer', {session: false}), function (req, res, next) {
     var interlocutionId = req.params.interlocutionId;
     CONNECT.findOne(Interlocution, res, {_id: interlocutionId}, function (result) {
         res.json({
@@ -65,7 +65,7 @@ router.get('/findone/:interlocutionId', function (req, res, next) {
 /**
  * 实现问题列表查找  /api/interlocution/findone/${interlocutionId}
  */
-router.get('/findlist', function (req, res, next) {
+router.get('/findlist', passport.authenticate('bearer', {session: false}), function (req, res, next) {
     var interlocutionId = req.query.interlocutionId;
     var questionName = req.query.questionName;
     var questionLevel = req.query.questionLevel;

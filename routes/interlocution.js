@@ -2,12 +2,13 @@ var express = require('express');
 var router = express.Router();
 var Interlocution = require("../mongoose/schema/interlocution");
 var CONNECT = require('../common/connect');
+var passport = require('passport');
 
 
 /**
  * 实现问题添加 /api/interlocution/add
  */
-router.post('/add', function (req, res, next) {
+router.post('/add', passport.authenticate('bearer', {session: false}), function (req, res, next) {
     var reqData = req.body;
     CONNECT.insertOne(Interlocution, res, reqData, function (result) {
         res.json({

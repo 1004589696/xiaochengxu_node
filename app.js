@@ -5,14 +5,23 @@ var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+/***  权限 STARRT  ***/
+var passport = require('passport');
+require('./common/auth');
+/***  权限 END  ***/
+
+/***  过滤器 STARRT  ***/
+var filter = require("./common/filter");
+/***  过滤器 END  ***/
+
 /***  日志 STARRT  ***/
 var log4js = require('./log-config/log-config');
-var logger = log4js.getLogger()
-/***  日志 STARRT  ***/
+var logger = log4js.getLogger();
+/***  日志 END  ***/
 
 /***  实现分发路由模块2 STARRT  ***/
 var routes = require('./routes/index');
-/***  实现分发路由模块2 STARRT  ***/
+/***  实现分发路由模块2 END  ***/
 
 var app = express();
 
@@ -28,11 +37,16 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+/***  初始化passport模块 STARRT  ***/
+app.use(passport.initialize());
+/***  初始化passport模块 END  ***/
+
 /***  日志 STARRT  ***/
-log4js.useLogger(app,logger);
+log4js.useLogger(app, logger);
 /***  日志 END  ***/
 
 /***  实现分发路由模块2 STARRT  ***/
+app.use(filter);
 routes(app);
 /***  实现分发路由模块2 END  ***/
 

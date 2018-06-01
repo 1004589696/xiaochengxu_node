@@ -18,7 +18,7 @@ var Interlocution = new Schema({
     }],
     createTime: {type: Date, default: Date.now},
     updateTime: {type: Date, default: Date.now},
-    nodelete: {type: Date, default: true}
+    valid: {type: Boolean, default: true}
 }, {
     versionKey: false,
     timestamps: {createdAt: 'createTime', updatedAt: 'updateTime'}

@@ -43,7 +43,7 @@ exports.updateOne = function (collectionName, res, conditions, data, callback) {
 
 //查
 exports.findOne = function (collectionName, res, conditions, callback) {
-    conditions.nodelete = true;
+    conditions.valid = true;
     collectionName.findOne(conditions, function (err, result) {
         if (err) {
             res.json({
@@ -59,7 +59,7 @@ exports.findOne = function (collectionName, res, conditions, callback) {
 exports.find = function (collectionName, res, conditions, callback, page, size) {
     !size && (size = 100);
     !page && (page = 0);
-    conditions.nodelete = true;
+    conditions.valid = true;
     var query = collectionName.find(conditions);
     query.limit(size);
     query.skip(page);

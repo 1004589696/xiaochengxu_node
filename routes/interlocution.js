@@ -1,48 +1,88 @@
 var express = require('express');
 var router = express.Router();
 var Interlocution = require("../mongoose/schema/interlocution");
+var CONNECT = require('../common/connect');
+
 
 /**
- * 实现问题添加
+ * 实现问题添加 /api/interlocution/add
  */
 router.post('/add', function (req, res, next) {
     var reqData = req.body;
-    var InterlocutionObj = new Interlocution(reqData);
-    InterlocutionObj.save(function (err, result) {
-        if (err) {
-            res.json({
-                code: '500',
-                msg: "Error:" + err
-            });
-        } else {
-            res.json({
-                code: '0',
-                result: result
-            });
-        }
-    })
+    CONNECT.insertOne(Interlocution, res, reqData, function (result) {
+        res.json({
+            code: '0',
+            result: result
+        });
+    });
 });
 
+
 /**
- * 实现问题编辑
+ * 实现问题编辑 /api/interlocution/edit?interlocutionId=${interlocutionId}
  */
 router.post('/edit', function (req, res, next) {
     var interlocutionId = req.query.interlocutionId;
     var reqData = req.body;
-    Interlocution.update({_id: interlocutionId}, reqData, function (err, result) {
-        if (err) {
-            res.json({
-                code: '500',
-                msg: "Error:" + err
-            });
-        } else {
-            res.json({
-                code: '0',
-                result: result
-            });
-        }
+    CONNECT.updateOne(Interlocution, res, {_id: interlocutionId}, reqData, function (result) {
+        res.json({
+            code: '0',
+            result: result
+        });
     });
 });
 
+
+/**
+ * 实现问题删除  /api/interlocution/deleteone/${interlocutionId}
+ */
+router.delete('/deleteone/:interlocutionId', function (req, res, next) {
+    var interlocutionId = req.params.interlocutionId;
+    CONNECT.deleteOne(Interlocution, res, {_id: interlocutionId}, function (result) {
+        res.json({
+            code: '0',
+            result: result
+        });
+    });
+});
+
+
+/**
+ * 实现问题查找  /api/interlocution/findone/${interlocutionId}
+ */
+router.get('/findone/:interlocutionId', function (req, res, next) {
+    var interlocutionId = req.params.interlocutionId;
+    CONNECT.findOne(Interlocution, res, {_id: interlocutionId}, function (result) {
+        res.json({
+            code: '0',
+            result: result
+        });
+    });
+});
+
+
+/**
+ * 实现问题列表查找  /api/interlocution/findone/${interlocutionId}
+ */
+router.get('/findlist', function (req, res, next) {
+    var interlocutionId = req.query.interlocutionId;
+    var questionName = req.query.questionName;
+    var questionLevel = req.query.questionLevel;
+    var questionType = req.query.questionType;
+    var page = req.query.page || 0;
+    var size = req.query.size || 100;
+    var conditions = {};
+    interlocutionId && (conditions._id = interlocutionId);
+    questionName && (conditions.questionName = questionName);
+    questionLevel && (conditions.questionLevel = questionLevel);
+    questionType && (conditions.questionType = questionType);
+
+    CONNECT.find(Interlocution, res, conditions, function (result) {
+        res.json({
+            code: '0',
+            result: result
+        });
+    }, page, size);
+});
 
 module.exports = router;

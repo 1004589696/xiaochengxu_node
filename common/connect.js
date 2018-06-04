@@ -15,7 +15,7 @@ exports.insertOne = function (collectionName, res, data, callback) {
 
 //删除
 exports.deleteOne = function (collectionName, res, conditions, callback) {
-    collectionName.remove(conditions, function (err, result) {
+    collectionName.update(conditions, {valid: false}, function (err, result) {
         if (err) {
             res.json({
                 code: '500',

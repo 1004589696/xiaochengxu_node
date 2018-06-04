@@ -5,25 +5,38 @@ var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-/***  权限 STARRT  ***/
+/***  权限  ***/
 var passport = require('passport');
 require('./common/auth');
-/***  权限 END  ***/
+/***  权限  ***/
 
-/***  过滤器 STARRT  ***/
+/***  过滤器  ***/
 var filter = require("./common/filter");
-/***  过滤器 END  ***/
+/***  过滤器  ***/
 
-/***  日志 STARRT  ***/
+/***  日志  ***/
 var log4js = require('./log-config/log-config');
 var logger = log4js.getLogger();
-/***  日志 END  ***/
+/***  日志  ***/
 
-/***  实现分发路由模块2 STARRT  ***/
+/***  分发路由  ***/
 var routes = require('./routes/index');
-/***  实现分发路由模块2 END  ***/
+/***  分发路由  ***/
 
 var app = express();
+
+/*** 跨域 ***/
+app.all('*', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization, platform_type, x-total-count");
+    res.header('Access-Control-Expose-Headers', 'x-total-count');
+    res.header("X-Powered-By", ' 3.2.1');
+    res.header("Content-Type", "application/json;charset=utf-8");
+
+    next();
+});
+/*** 跨域 ***/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

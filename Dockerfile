@@ -1,6 +1,6 @@
 FROM node
 
-MAINTAINER Ryze <hz.bgning@gmail.com>
+MAINTAINER Ryze <cunkuan.ding@gmail.com>
 
 
 WORKDIR /home/project
